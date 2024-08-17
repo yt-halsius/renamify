@@ -34,6 +34,7 @@ You can check your current PowerShell execution policy by running the following 
 
 ```powershell
 Get-ExecutionPolicy
+```
 
 If it returns something other than `AllSigned`, you should change it.
 
@@ -43,3 +44,4 @@ To set the execution policy to `AllSigned`, run the following command in PowerSh
 
 ```powershell
 Set-ExecutionPolicy AllSigned -Scope CurrentUser
+```
