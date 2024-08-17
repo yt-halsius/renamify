@@ -20,9 +20,9 @@ To rename files in a folder located at `C:\Images`, you can run the script as fo
 
 ```powershell
 .\RenameImages.ps1 -Path "C:\Images"
+```
 
 If the `-Path` parameter is omitted, the script will prompt you to enter the folder path.
-```
 
 ## Security Settings
 
