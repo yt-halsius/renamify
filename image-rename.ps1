@@ -13,25 +13,25 @@ if (-not (Test-Path -Path $Path)) {
     exit
 }
 
-# Get all .jpg files in the folder
-$jpgFiles = Get-ChildItem -Path $Path -Filter *.jpg
+# Get all .jpg files in the folder and sort them by last modified time (LastWriteTime)
+$jpgFiles = Get-ChildItem -Path $Path -Filter *.jpg | Sort-Object LastWriteTime
 
 # Initialize a counter for the sequence number
 $counter = 1
 
 # Loop through each jpg file and rename it
 foreach ($file in $jpgFiles) {
-    # Define the initial new name with prefix 'Image_' followed by the counter
-    $newName = "Image_$counter.jpg"
+    # Define the new name with prefix 'Image_' followed by a three-digit counter
+    $newName = "Image_{0:D3}.jpg" -f $counter
     
     # Build the full path for the new name
     $newFullPath = Join-Path -Path $Path -ChildPath $newName
     
-    # Check if a file with the new name already exists
+    # Check if a file with the new name already exists and handle conflicts
     $suffixCounter = 1
     while (Test-Path -Path $newFullPath) {
-        # If it exists, create a new name with a suffix (_n)
-        $newName = "Image_${counter}_$suffixCounter.jpg"
+        # If it exists, create a new name with a suffix (_n) and maintain three-digit formatting
+        $newName = "Image_{0:D3}_$suffixCounter.jpg" -f $counter
         $newFullPath = Join-Path -Path $Path -ChildPath $newName
         $suffixCounter++
     }
@@ -48,8 +48,8 @@ Write-Host "Renaming completed successfully."
 # SIG # Begin signature block
 # MIIbnQYJKoZIhvcNAQcCoIIbjjCCG4oCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUq9m5kdNqxRPfBJYN5q9Iga8W
-# TQagghYTMIIDBjCCAe6gAwIBAgIQTuDT7Q+DSYpGuXSPTY3N+jANBgkqhkiG9w0B
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUs615MKiCI0QIi04EdRRwJgtb
+# AfmgghYTMIIDBjCCAe6gAwIBAgIQTuDT7Q+DSYpGuXSPTY3N+jANBgkqhkiG9w0B
 # AQsFADAbMRkwFwYDVQQDDBBBVEEgQXV0aGVudGljb2RlMB4XDTI0MDgxNzIwMDgx
 # NFoXDTI1MDgxNzIwMjgxNFowGzEZMBcGA1UEAwwQQVRBIEF1dGhlbnRpY29kZTCC
 # ASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMqsPiBAc2Ug7z0vU0SeV3sc
@@ -170,28 +170,28 @@ Write-Host "Renaming completed successfully."
 # 8AIBATAvMBsxGTAXBgNVBAMMEEFUQSBBdXRoZW50aWNvZGUCEE7g0+0Pg0mKRrl0
 # j02NzfowCQYFKw4DAhoFAKB4MBgGCisGAQQBgjcCAQwxCjAIoAKAAKECgAAwGQYJ
 # KoZIhvcNAQkDMQwGCisGAQQBgjcCAQQwHAYKKwYBBAGCNwIBCzEOMAwGCisGAQQB
-# gjcCARUwIwYJKoZIhvcNAQkEMRYEFNoW5wUyGsyNqajdh+NP3pqo/dhrMA0GCSqG
-# SIb3DQEBAQUABIIBACpOpoVKT1Tz0BfPQHrsPMAp7bmrSgodqa5qzXDGkRvUmnmL
-# Aozk0AtJquD3zULnuTsIaQG4627XIJHAG+oUp+8MpGZHkqhOQ45JHZtcwu+CnwjW
-# git+/sI8OX5wdd+rMdpIoYN6Mzz8Stt6aJIbj+CetSGIBWVIjbYYVe6WvLHz+p4t
-# V57aiEoHaATT3xz7VWjY7nJzqQnjtN+lnpr0Cze7aOqCfbPw7O3S0Kv4JdwtzFLN
-# tycHGyMpwZwuyxrRJgLUrobcXf52o+AN1b/x4HQsmhIbhInO+XlYAUU0axt8ldeN
-# mQnqFR4XKoWKxh1pAeJrzw8gfJZ3bD1WRFTLuiuhggMgMIIDHAYJKoZIhvcNAQkG
+# gjcCARUwIwYJKoZIhvcNAQkEMRYEFK0dHzSPQtTUZdofP99oXit6BxhbMA0GCSqG
+# SIb3DQEBAQUABIIBADQVPCHCPSk9F0AQfGmoXolsxToGmQsfHKpjnkWIO99v0TeC
+# ePYFlLm9bUsdI9v3lWGOKT2U0KPIV7auwPh2mvfqsAAXCyDdV7vK+dEL9h+ge7OZ
+# 1IhBB/Im+fjWSxgRqgXDoiXHAye0bZ6B/KzkQVaQwYB6bPPWqQqy9zt7EWaeu+FF
+# xKX+nwUaxcDLPGdIg/Oq1oycb4cgeB/fZCWgjx5uXt7qamoaljWlnTMOajDn9VqO
+# fAd8snRPVaCtexUUu5BMHG+K1jiS0WBLQMK8uF50vnlPf+cqd5EKHbWPbHB6UBGZ
+# qWxuL+PR7euecTtWlij5YbrqLS0R79XuJgEfwjWhggMgMIIDHAYJKoZIhvcNAQkG
 # MYIDDTCCAwkCAQEwdzBjMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
 # IEluYy4xOzA5BgNVBAMTMkRpZ2lDZXJ0IFRydXN0ZWQgRzQgUlNBNDA5NiBTSEEy
 # NTYgVGltZVN0YW1waW5nIENBAhAFRK/zlJ0IOaa/2z9f5WEWMA0GCWCGSAFlAwQC
 # AQUAoGkwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcN
-# MjQwODE3MjAxOTQ2WjAvBgkqhkiG9w0BCQQxIgQgxR2ut0uxT1txxtMy0xzsj8ym
-# fbRLBouR/kKeHEm91icwDQYJKoZIhvcNAQEBBQAEggIAdqwj5wbaTucbG9u49tfc
-# OVdhBP8ZiSo+bZMFl8u/M4yM9vb2b9619vHBH9QIFfNj9Rg6X82P4ozk0TPFXMLs
-# dabXu5sAHdY83r2rdKgEjrCBJ8gkfF1cI813Pk7a+BEeESofapDBqD6F7c1OK74v
-# 9fVuSLm5SF3Mk1caQn744gW2Cvr8vED/ImZINMwrl57V6mr9P1O8w3P2kUP2JrnQ
-# iaY/BTjOhL6JnRCoGO8uOeNAAQWBqbZ6isZaVuS1Z/VYPx1rDnps6NKCVd5YRciV
-# qOkOprxtogimMwRWTr9B8vgWGb3ahzrWaLDwUdGizkGh3l9wLY/rbA2T0QP+nk4H
-# Q5NgqoLu1QY1hfUqdrR1aD6Mtz38k6/JPH+GnNKZyeUu8udaXFVYRoZ2k3YrGiY8
-# bLXHn2W5y0d+iOjZVTqQNZx+H3w1ooRdYa2tUeM7Em2EO9fMi3vxa/EGDuV2nZcO
-# ujZsO5HOoGc8rKDwLB57UYMfTbSgfimPWWEev1mrAemIIOcHxgOCCmSFZkSFnB10
-# nttSfwNQTu2jDViwavU9AtVBc4dva3uEe7OXV3HjTX60BqJvgoObAv5nxBohbZNy
-# nKixrN/iy0BpBS8u8CjjNur0d+vSoGAMGInh1jfmsWk9CzKyZDt/whgtLcMXYRuC
-# BSM0OvX4YVCsowNH+8at9IU=
+# MjQwODE4MTQzNjEwWjAvBgkqhkiG9w0BCQQxIgQgcw5yZqlq/xiiGqFCW5P3eE6D
+# 0zdb7kFEQZ0C3u2tqQYwDQYJKoZIhvcNAQEBBQAEggIAG8JcNXvPEKhAMwjCE+en
+# 4+D8P5LJz+6wn7T3ucETDvzF1EV7H7IpOk9Y9hFzHT4fpdHdllUrPtCTKH9R4fQ2
+# 3kDiG6NNwjehzgMW3klsynl3R27a/WNhSFLJNUHCs9Igx6yfhDzTCiKvXZfUvfC9
+# ZB/nuFJoZ/2M8pu8vnTDcZW73QpNFz3luCIcX26cm3mAebKiVbmTGvGffSvuIRzF
+# DnBA1vZlmLUmDU/9HbQJZh0U6eBLCAgZw4KCEVUpZBr3xtPHcKgKuK0TBtQyM8xt
+# 0iPpLMgf0nkCx+OQrakBOSLQsLCy7Q5+6XRSJKGgWMpOm+ES9CDG7KedOmORTlbV
+# KslZFACZenuCsdEwno/oLJ4Spgun7zX1Wh89fTOp3x14NDm0UGrgoluvrHZVNA5a
+# ueeJBq+rfX/nz4pwxe1JXKGiCQEdqWAD0Es1kA82OAeD9jyssMhWuga1chPhLt82
+# Fc9yppx7CaBWYBSbDMwI7CGYjKDUa8gGNQfbdmV8zlIC3zLKfPQMyzFnWywOtS7N
+# 0M0ODDjUYHjdsLOYJZkutdQbktmOlF/9vzpmLADFaixGGM2ZkDmEmZ01lC1w3otg
+# 5zlh7HiiXWTJlL0dm6NDXGQbaozn4ka8w3OM5+oBW0Z/coXKzm0+HflEvPpDjIqx
+# v8VMQQ418kAcq6L2KhkDSQM=
 # SIG # End signature block
