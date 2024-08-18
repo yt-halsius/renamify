@@ -1,10 +1,11 @@
 # Image Renaming Script
 
-This PowerShell script is designed to batch rename `.jpg` files within a specified folder, applying a sequential naming convention. The script processes all `.jpg` files in the folder and renames them using a `Image_` prefix followed by a sequence number. If a file with the new name already exists, the script appends a suffix (`_n`) to the filename to ensure uniqueness.
+This PowerShell script is designed to batch rename `.jpg` files within a specified folder, applying a sequential naming convention. The script processes all `.jpg` files in the folder and renames them using an `Image_` prefix followed by a three-digit sequence number (e.g., `Image_001.jpg`). If a file with the new name already exists, the script appends a suffix (`_n`) to the filename to ensure uniqueness.
 
 ## Features
 
-- **Sequential Renaming**: The script renames each `.jpg` file in the folder with a sequentially numbered name starting with `Image_1.jpg`.
+- **Sequential Renaming**: The script renames each `.jpg` file in the folder with a sequentially numbered name, formatted as `Image_001.jpg`, `Image_002.jpg`, etc., ensuring that the sequence number is always three digits.
+- **Sorted by Last Modified Time**: The images are renamed in order of their last modified date and time, with the oldest image being renamed first.
 - **Conflict Handling**: If a file with the intended new name already exists, the script appends a suffix (`_1`, `_2`, etc.) to avoid overwriting files.
 - **User-Friendly**: If the `-Path` parameter is not provided when running the script, it prompts the user to input the folder path.
 
